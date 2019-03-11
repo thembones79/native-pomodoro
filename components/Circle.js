@@ -1,34 +1,41 @@
-import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Constants, Svg } from 'expo';
+import React, { Component } from "react";
+import { View, StyleSheet } from "react-native";
+import { Constants, Svg } from "expo";
 
 export default class Circle extends Component {
-    render() {
-        return (
-          <Svg height={100} width={100}>
-            <Svg.Circle
-              cx={50}
-              cy={50}
-              r={45}
-              strokeWidth={2.5}
-              stroke="#e74c3c"
-              fill="transparent"
-              style={{
-                strokeDasharray: `${250} ${1000}`
-              }}
-            />
-          </Svg>
-        );
-    }
+
+
+  render() {
+    const radius = 150;
+    const circleLength = 2 * Math.PI * radius;
+    return (
+      <View style={styles.circleContainer}>
+        <Svg height={320} width={320}>
+          <Svg.Circle
+            cx={160}
+            cy={160}
+            r={radius}
+            strokeWidth={2.5}
+            stroke="#ffffff"
+            fill="transparent"
+            strokeDasharray={circleLength}
+            strokeDashoffset={(60 - this.props.secondsLeft)*(circleLength/60)}
+            strokeLinecap="round"
+            transition="1s"
+            style={{
+              transition: "1s"}}
+          />
+        </Svg>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: Constants.statusBarHeight,
-        backgroundColor: '#ecf0f1',
-    },
-});
+  circleContainer: {
 
+    alignItems: "center",
+    justifyContent: "center",
+    transform: [{ rotate: "-90deg" }]
+  }
+});
