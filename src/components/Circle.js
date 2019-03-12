@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { Constants, Svg } from "expo";
 
 export default class Circle extends Component {
@@ -25,7 +25,9 @@ export default class Circle extends Component {
             style={{
               transition: "1s"}}
           />
+          
         </Svg>
+        
       </View>
     );
   }
