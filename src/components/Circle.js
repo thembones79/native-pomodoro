@@ -3,11 +3,11 @@ import { View, StyleSheet, Text } from "react-native";
 import { Constants, Svg } from "expo";
 
 export default class Circle extends Component {
-
-
   render() {
     const radius = 150;
     const circleLength = 2 * Math.PI * radius;
+    const { secondsLeft, totalTime } = this.props;
+
     return (
       <View style={styles.circleContainer}>
         <Svg height={320} width={320}>
@@ -19,15 +19,16 @@ export default class Circle extends Component {
             stroke="#ffffff"
             fill="transparent"
             strokeDasharray={circleLength}
-            strokeDashoffset={(60 - this.props.secondsLeft)*(circleLength/60)}
+            strokeDashoffset={
+              (totalTime - secondsLeft) * (circleLength / totalTime)
+            }
             strokeLinecap="round"
             transition="1s"
             style={{
-              transition: "1s"}}
+              transition: "1s"
+            }}
           />
-          
         </Svg>
-        
       </View>
     );
   }
@@ -35,7 +36,6 @@ export default class Circle extends Component {
 
 const styles = StyleSheet.create({
   circleContainer: {
-
     alignItems: "center",
     justifyContent: "center",
     transform: [{ rotate: "-90deg" }]
