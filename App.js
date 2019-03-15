@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ClockFace from "./src/components/ClockFace";
-import { Button } from "./src/components/Button";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Settings from "./src/components/Settings";
+import { Audio } from "expo";
 
 const INITIAL_STATE = {
   secondsLeft: 120,
@@ -13,10 +13,24 @@ const INITIAL_STATE = {
   breakLength: 1
 };
 
+
+const soundObject = new Audio.Sound();
+soundObject.loadAsync(require("./assets/BeepSound.wav"));
+
+
 export default class App extends React.Component {
   state = INITIAL_STATE;
 
+  beep = () => {
+    soundObject.playAsync();
+  };
+
+  beepStop = () => {
+    soundObject.stopAsync();
+  };
+
   reset = () => {
+    this.beepStop();
     clearInterval(this.timer);
     this.setState(INITIAL_STATE);
   }
@@ -39,7 +53,7 @@ export default class App extends React.Component {
 
   sessionChange = () => {
     if (this.state.secondsLeft <= 0) {
-      //this.beep();
+      this.beep();
       if (this.state.isSession) {
         this.setState(state => ({
           isSession: false,
@@ -57,8 +71,56 @@ export default class App extends React.Component {
   };
 
 
+  decreaseDisplayedTime = () => {
+    this.setState({
+      secondsLeft: this.state.secondsLeft - 60,
+      totalTime: this.state.totalTime - 60
+    });
+  };
 
+  increaseDisplayedTime = () => {
+    this.setState({
+      secondsLeft: this.state.secondsLeft + 60,
+      totalTime: this.state.totalTime + 60
+    });
+  };
 
+  sessionDecrement = () => {
+    if (this.state.sessionLength > 1) {
+      this.setState({ sessionLength: this.state.sessionLength - 1 });
+      //the condition below prevents decreasing displayed time when in session mode and pressing "break decrement" button
+      if (this.state.isSession) {
+        this.decreaseDisplayedTime();
+      }
+    }
+  };
+
+  sessionIncrement = () => {
+    if (this.state.sessionLength < 60) {
+      this.setState({ sessionLength: this.state.sessionLength + 1 });
+      if (this.state.isSession) {
+        this.increaseDisplayedTime();
+      }
+    }
+  };
+
+  breakDecrement = () => {
+    if (this.state.breakLength > 1) {
+      this.setState({ breakLength: this.state.breakLength - 1 });
+      if (!this.state.isSession) {
+        this.decreaseDisplayedTime();
+      }
+    }
+  };
+
+  breakIncrement = () => {
+    if (this.state.breakLength < 60) {
+      this.setState({ breakLength: this.state.breakLength + 1 });
+      if (!this.state.isSession) {
+        this.increaseDisplayedTime();
+      }
+    }
+  };
 
 
   render() {
@@ -71,6 +133,14 @@ export default class App extends React.Component {
           countdown={this.countdown}
           isCountingDown={this.state.isCountingDown}
           reset={this.reset}
+        />
+        <Settings
+        breakLength={this.state.breakLength}
+        sessionLength={this.state.sessionLength}
+        breakDecrement={this.breakDecrement}
+        breakIncrement={this.breakIncrement}
+        sessionDecrement={this.sessionDecrement}
+        sessionIncrement={this.sessionIncrement}
         />
 
       </View>
