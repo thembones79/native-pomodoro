@@ -3,6 +3,10 @@ import { StyleSheet, Text, View } from "react-native";
 import ClockFace from "./src/components/ClockFace";
 import Settings from "./src/components/Settings";
 import { Audio } from "expo";
+import alarm from "./assets/BeepSound.wav";
+
+
+
 
 const INITIAL_STATE = {
   secondsLeft: 120,
@@ -15,29 +19,63 @@ const INITIAL_STATE = {
 
 
 const soundObject = new Audio.Sound();
-soundObject.loadAsync(require("./assets/BeepSound.wav"));
+const dupa = new Audio.Sound(alarm);
+const kupa = new Audio(alarm);
 
+async function asyncTask() {
+
+  try {
+    await soundObject.loadAsync(require("./assets/BeepSound.wav"));
+    await soundObject.playAsync();
+    // Your sound is playing!
+  } catch (error) {
+    // An error occurred!
+    alert(error);
+  }
+
+
+
+}
 
 export default class App extends React.Component {
-  state = INITIAL_STATE;
+  constructor(props) {
+    super(props);
+    this.state = INITIAL_STATE;
+    this.alarm = new Audio.Sound(alarm);
+  }
+
+componentDidMount(){
+
+asyncTask();
+
+}
+
 
   beep = () => {
-    soundObject.playAsync();
+
+      soundObject.playAsync();
+
+
   };
 
-  beepStop = () => {
-    soundObject.stopAsync();
+  beepStop = async () => {
+    try {
+      await soundObject.stopAsync();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   reset = () => {
     this.beepStop();
     clearInterval(this.timer);
     this.setState(INITIAL_STATE);
-  }
+  };
 
   countdown = () => {
     if (!this.state.isCountingDown) {
       clearInterval(this.timer);
+      this.beep();
       this.setState({ isCountingDown: true });
       this.timer = setInterval(this.timerDecrement, 1000);
     } else {
@@ -47,9 +85,11 @@ export default class App extends React.Component {
   };
 
   timerDecrement = () => {
-    this.setState(state => ({ secondsLeft: state.secondsLeft - 1 }), this.sessionChange);
+    this.setState(
+      state => ({ secondsLeft: state.secondsLeft - 1 }),
+      this.sessionChange
+    );
   };
-
 
   sessionChange = () => {
     if (this.state.secondsLeft <= 0) {
@@ -69,7 +109,6 @@ export default class App extends React.Component {
       }
     }
   };
-
 
   decreaseDisplayedTime = () => {
     this.setState({
@@ -122,10 +161,14 @@ export default class App extends React.Component {
     }
   };
 
-
   render() {
     return (
-      <View style={[styles.container, {backgroundColor: this.state.isSession?"tomato":"green"}]}>
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: this.state.isSession ? "tomato" : "green" }
+        ]}
+      >
         <ClockFace
           isSession={this.state.isSession}
           secondsLeft={this.state.secondsLeft}
@@ -134,14 +177,15 @@ export default class App extends React.Component {
           isCountingDown={this.state.isCountingDown}
           reset={this.reset}
         />
-        <Settings
-        breakLength={this.state.breakLength}
-        sessionLength={this.state.sessionLength}
-        breakDecrement={this.breakDecrement}
-        breakIncrement={this.breakIncrement}
-        sessionDecrement={this.sessionDecrement}
-        sessionIncrement={this.sessionIncrement}
-        />
+
+          <Settings
+            breakLength={this.state.breakLength}
+            sessionLength={this.state.sessionLength}
+            breakDecrement={this.breakDecrement}
+            breakIncrement={this.breakIncrement}
+            sessionDecrement={this.sessionDecrement}
+            sessionIncrement={this.sessionIncrement}
+          />
 
       </View>
     );

@@ -15,19 +15,24 @@ const styles = {
   textStyle: {
     alignSelf: "center",
     color: "white",
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 28,
+    fontWeight: "300",
     paddingTop: 10,
     paddingBottom: 10
   },
   buttonStyle: {
     alignSelf: "center",
-    backgroundColor: "tomato",
-    borderRadius: 5,
-    borderWidth: 0,
-    borderColor: "#007aff",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
     marginLeft: 5,
-    marginRight: 5
+    marginRight: 5,
+    marginTop: 5,
+    marginBottom: 5
   }
 };
 

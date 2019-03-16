@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View , StyleSheet} from "react-native";
 import SettingItem from "./SettingItem";
 
 const Settings = ({
@@ -10,7 +10,7 @@ const Settings = ({
   sessionDecrement,
   sessionIncrement
 }) => (
-  <View>
+  <View style={styles.settingsStyle}>
     <SettingItem
       itemName="session"
       value={sessionLength}
@@ -25,5 +25,15 @@ const Settings = ({
     />
   </View>
 );
+
+const styles = {
+  settingsStyle: {
+    flexDirection: "row",
+    width: "100%",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-around"
+  }
+};
 
 export default Settings;
