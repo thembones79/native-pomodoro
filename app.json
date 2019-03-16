@@ -24,6 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "My version of Pomodoro Clock in React Native",
+    "githubUrl": "https://github.com/thembones79/native-pomodoro"
   }
 }
