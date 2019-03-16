@@ -4,18 +4,26 @@ import { Button } from "./Button";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const Controls = ({ countdown, isCountingDown, reset }) => (
-  <View>
-    <Button onPress={countdown}>
+  <View style={styles.controlsStyle}>
+    <Button onPress={countdown} >
       {isCountingDown ? (
-        <Icon name="pause" size={30} color="white" />
+        <Icon name="pause" size={40} color="white" />
       ) : (
-        <Icon name="play" size={30} color="white" />
+        <Icon name="play" size={40} color="white" />
       )}
     </Button>
     <Button onPress={reset}>
-      <Icon name="refresh" size={30} color="white" />
+      <Icon name="refresh" size={40} color="white" />
     </Button>
   </View>
 );
+
+const styles = {
+  controlsStyle: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
+  }
+};
 
 export default Controls;

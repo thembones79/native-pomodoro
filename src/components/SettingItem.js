@@ -4,29 +4,42 @@ import { Button } from "./Button";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const SettingItem = ({ itemName, value, decrement, increment }) => (
-  <View>
+  <View style={styles.settingItemStyle}>
     <View>
-      <Text>{itemName} length</Text>
+      <Text style={styles.settingItemLabelStyle}>{itemName} length</Text>
     </View>
-    <View>
-      <Button onPress={decrement}>
-        <Icon name="minus" size={30} color="white" />
+    <View style={styles.settingItemComponentStyle}>
+      <Button onPress={decrement} border={1}>
+        <Icon name="minus" size={20} color="white" />
       </Button>
-      <Text>{value}</Text>
-      <Button onPress={increment}>
-        <Icon name="plus" size={30} color="white" />
+      <Text style={styles.settingItemTextStyle}>{value}</Text>
+      <Button onPress={increment} border={1}>
+        <Icon name="plus" size={20} color="white" />
       </Button>
     </View>
   </View>
 );
 
 const styles = {
-  settingItemStyle: {
+  settingItemComponentStyle: {
     flexDirection: "row",
-    width: "100%",
-    flex: 1,
     alignItems: "center",
     justifyContent: "space-around"
+  },
+  settingItemStyle: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  settingItemLabelStyle: {
+    color: "white",
+    marginBottom: 10,
+    fontSize: 18
+  },
+  settingItemTextStyle: {
+    color: "white",
+    fontSize: 30,
+    marginLeft: 10,
+    marginRight: 10
   }
 };
 

@@ -1,11 +1,14 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
-const Button = ({ onPress, children }) => {
+const Button = ({ onPress, children, border }) => {
   const { buttonStyle, textStyle } = styles;
 
   return (
-    <TouchableOpacity onPress={onPress} style={buttonStyle}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[buttonStyle, { borderWidth: border }]}
+    >
       <Text style={textStyle}>{children}</Text>
     </TouchableOpacity>
   );
@@ -22,10 +25,9 @@ const styles = {
   },
   buttonStyle: {
     alignSelf: "center",
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    borderWidth: 1,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     borderColor: "white",
     alignItems: "center",
     justifyContent: "center",

@@ -9,9 +9,18 @@ const Timer = ({ secondsLeft }) => {
 
   return (
     <View>
-      <Text>{minutes + ":" + seconds}</Text>
+      <Text style={styles.statusTimerStyle}>{minutes + ":" + seconds}</Text>
     </View>
   );
 };
 
+const styles = {
+  statusTimerStyle: {
+    alignSelf: "center",
+    color: "white",
+    fontSize: 100,
+    fontWeight: '100',
+    fontFamily: "System"
+  }
+};
 export default Timer;

@@ -5,57 +5,41 @@ import Settings from "./src/components/Settings";
 import { Audio } from "expo";
 import alarm from "./assets/BeepSound.wav";
 
-
-
-
 const INITIAL_STATE = {
-  secondsLeft: 120,
-  totalTime: 120,
+  secondsLeft: 1500,
+  totalTime: 1500,
   isCountingDown: false,
   isSession: true,
-  sessionLength: 2,
-  breakLength: 1
+  sessionLength: 25,
+  breakLength: 5
 };
-
 
 const soundObject = new Audio.Sound();
 const dupa = new Audio.Sound(alarm);
-const kupa = new Audio(alarm);
 
-async function asyncTask() {
-
+async function loadSound() {
   try {
     await soundObject.loadAsync(require("./assets/BeepSound.wav"));
-    await soundObject.playAsync();
+    // await soundObject.playAsync();
     // Your sound is playing!
   } catch (error) {
     // An error occurred!
     alert(error);
   }
-
-
-
 }
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = INITIAL_STATE;
-    this.alarm = new Audio.Sound(alarm);
   }
 
-componentDidMount(){
-
-asyncTask();
-
-}
-
+  componentDidMount() {
+    loadSound();
+  }
 
   beep = () => {
-
-      soundObject.playAsync();
-
-
+    soundObject.playAsync();
   };
 
   beepStop = async () => {
@@ -166,9 +150,10 @@ asyncTask();
       <View
         style={[
           styles.container,
-          { backgroundColor: this.state.isSession ? "tomato" : "green" }
+          { backgroundColor: this.state.isSession ? "tomato" : "#00de88" }
         ]}
       >
+        <Text style={styles.headerStyle}>Pomodoro Clock</Text>
         <ClockFace
           isSession={this.state.isSession}
           secondsLeft={this.state.secondsLeft}
@@ -178,24 +163,31 @@ asyncTask();
           reset={this.reset}
         />
 
-          <Settings
-            breakLength={this.state.breakLength}
-            sessionLength={this.state.sessionLength}
-            breakDecrement={this.breakDecrement}
-            breakIncrement={this.breakIncrement}
-            sessionDecrement={this.sessionDecrement}
-            sessionIncrement={this.sessionIncrement}
-          />
-
+        <Settings
+          breakLength={this.state.breakLength}
+          sessionLength={this.state.sessionLength}
+          breakDecrement={this.breakDecrement}
+          breakIncrement={this.breakIncrement}
+          sessionDecrement={this.sessionDecrement}
+          sessionIncrement={this.sessionIncrement}
+        />
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
+  },
+  headerStyle:{
+    color: "white",
+    fontSize: 40,
+    fontWeight: "200",
+    marginTop: 40,
+    marginBottom: 20
+
   }
-});
+};
