@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import ClockFace from "./src/components/ClockFace";
 import Settings from "./src/components/Settings";
 import { Audio } from "expo";
-import alarm from "./assets/BeepSound.wav";
 
 const INITIAL_STATE = {
   secondsLeft: 1500,
@@ -15,15 +14,11 @@ const INITIAL_STATE = {
 };
 
 const soundObject = new Audio.Sound();
-const dupa = new Audio.Sound(alarm);
 
 async function loadSound() {
   try {
     await soundObject.loadAsync(require("./assets/BeepSound.wav"));
-    // await soundObject.playAsync();
-    // Your sound is playing!
   } catch (error) {
-    // An error occurred!
     alert(error);
   }
 }
@@ -59,7 +54,6 @@ export default class App extends React.Component {
   countdown = () => {
     if (!this.state.isCountingDown) {
       clearInterval(this.timer);
-      this.beep();
       this.setState({ isCountingDown: true });
       this.timer = setInterval(this.timerDecrement, 1000);
     } else {
@@ -182,12 +176,11 @@ const styles = {
     alignItems: "center",
     justifyContent: "center"
   },
-  headerStyle:{
+  headerStyle: {
     color: "white",
     fontSize: 40,
     fontWeight: "200",
     marginTop: 40,
     marginBottom: 20
-
   }
 };
