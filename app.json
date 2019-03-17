@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "native-pomodoro",
+    "name": "Pomodoro Clock",
     "slug": "native-pomodoro",
     "privacy": "public",
     "sdkVersion": "32.0.0",
