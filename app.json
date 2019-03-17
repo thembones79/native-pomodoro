@@ -5,7 +5,8 @@
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "android": {
-      "package": "com.michalszumnarski.pomodoroclock"
+      "package": "com.michalszumnarski.pomodoroclock",
+      "versionCode": 2
     },
     "platforms": [
       "ios",
