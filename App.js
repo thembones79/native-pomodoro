@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import ClockFace from "./src/components/ClockFace";
 import Settings from "./src/components/Settings";
 import { Audio } from "expo";
+import { widthScale, heightScale } from "./src/components/scale"
 
 const INITIAL_STATE = {
   secondsLeft: 1500,
@@ -35,11 +36,13 @@ export default class App extends React.Component {
 
   beep = () => {
     soundObject.playAsync();
+    soundObject.replayAsync();
   };
 
   beepStop = async () => {
     try {
-      await soundObject.stopAsync();
+      await soundObject.pauseAsync();
+      await soundObject.setPositionAsync(0);
     } catch (error) {
       console.log(error);
     }
@@ -178,9 +181,9 @@ const styles = {
   },
   headerStyle: {
     color: "white",
-    fontSize: 40,
+    fontSize: 40*widthScale,
     fontWeight: "200",
-    marginTop: 40,
-    marginBottom: 20
+    marginTop: 40*widthScale,
+    marginBottom: 20*widthScale
   }
 };
