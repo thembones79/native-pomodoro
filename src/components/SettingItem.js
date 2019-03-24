@@ -35,11 +35,11 @@ const styles = {
   settingItemLabelStyle: {
     color: "white",
     marginBottom: 10*widthScale,
-    fontSize: 18*widthScale/fontScale
+    fontSize: 16*widthScale/fontScale
   },
   settingItemTextStyle: {
     color: "white",
-    fontSize: 30*widthScale/fontScale,
+    fontSize: 28*widthScale/fontScale,
     marginLeft: 10*widthScale,
     marginRight: 10*widthScale
   }

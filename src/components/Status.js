@@ -12,9 +12,9 @@ const Status = ({ isSession, secondsLeft }) => (
     <Timer secondsLeft={secondsLeft} />
     <View>
       {isSession ? (
-        <Icon name="rocket" size={60*widthScale/fontScale} color="white" />
+        <Icon name="rocket" size={58*widthScale/fontScale} color="white" />
       ) : (
-        <Icon name="coffee" size={60*widthScale/fontScale} color="white" />
+        <Icon name="coffee" size={58*widthScale/fontScale} color="white" />
       )}
     </View>
   </View>
@@ -32,7 +32,7 @@ const styles = {
   statusLabelStyle: {
     alignSelf: "center",
     color: "white",
-    fontSize: 28*widthScale/fontScale
+    fontSize: 26*widthScale/fontScale
   }
 };
 

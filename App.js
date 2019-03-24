@@ -3,7 +3,9 @@ import { Text, View } from "react-native";
 import ClockFace from "./src/components/ClockFace";
 import Settings from "./src/components/Settings";
 import { Audio } from "expo";
-import { widthScale, fontScale } from "./src/components/scale"
+import { widthScale, fontScale } from "./src/components/scale";
+
+
 
 const INITIAL_STATE = {
   secondsLeft: 1500,
@@ -32,8 +34,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     loadSound();
-    if (Text.defaultProps == null) Text.defaultProps = {};
-    Text.defaultProps.allowFontScaling = false;
+
   }
 
   beep = () => {
@@ -60,7 +61,10 @@ export default class App extends React.Component {
     if (!this.state.isCountingDown) {
       clearInterval(this.timer);
       this.setState({ isCountingDown: true });
-      this.timer = setInterval(this.timerDecrement, 1000);
+      this.timer = setInterval(
+        this.timerDecrement,
+        1000
+      );
     } else {
       this.setState({ isCountingDown: false });
       clearInterval(this.timer);
@@ -183,9 +187,9 @@ const styles = {
   },
   headerStyle: {
     color: "white",
-    fontSize: 40*widthScale/fontScale,
+    fontSize: 36*widthScale/fontScale,
     fontWeight: "200",
-    marginTop: 40*widthScale/fontScale,
-    marginBottom: 20*widthScale/fontScale
+    marginTop: 40*widthScale,
+    marginBottom: 20*widthScale
   }
 };

@@ -20,7 +20,7 @@ const styles = {
   statusTimerStyle: {
     alignSelf: "center",
     color: "white",
-    fontSize: 90*widthScale/fontScale,
+    fontSize: 80*widthScale/fontScale,
     fontWeight: '100',
     fontFamily: "System"
   }
