@@ -6,5 +6,6 @@ const baseWidth = 360;
 const baseHeight = 604;
 const widthScale = SCREEN_WIDTH / baseWidth;
 const heightScale = SCREEN_HEIGHT / baseHeight;
+const { fontScale } = Dimensions.get("window");
 
-export {widthScale, heightScale};
+export {widthScale, heightScale, fontScale};

@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { widthScale, heightScale } from './scale';
+import { widthScale, fontScale } from './scale';
+
 
 const Timer = ({ secondsLeft }) => {
   addZero = number => (number < 10 ? "0" + number : number);
@@ -19,7 +20,7 @@ const styles = {
   statusTimerStyle: {
     alignSelf: "center",
     color: "white",
-    fontSize: 96*widthScale,
+    fontSize: 90*widthScale/fontScale,
     fontWeight: '100',
     fontFamily: "System"
   }

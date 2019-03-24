@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Button } from "./Button";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { widthScale, heightScale } from "./scale";
+import { widthScale, fontScale } from "./scale";
 
 const SettingItem = ({ itemName, value, decrement, increment }) => (
   <View style={styles.settingItemStyle}>
@@ -11,11 +11,11 @@ const SettingItem = ({ itemName, value, decrement, increment }) => (
     </View>
     <View style={styles.settingItemComponentStyle}>
       <Button onPress={decrement} border={1}>
-        <Icon name="minus" size={20*widthScale} color="white" />
+        <Icon name="minus" size={20*widthScale/fontScale} color="white" />
       </Button>
       <Text style={styles.settingItemTextStyle}>{value}</Text>
       <Button onPress={increment} border={1}>
-        <Icon name="plus" size={20*widthScale} color="white" />
+        <Icon name="plus" size={20*widthScale/fontScale} color="white" />
       </Button>
     </View>
   </View>
@@ -35,11 +35,11 @@ const styles = {
   settingItemLabelStyle: {
     color: "white",
     marginBottom: 10*widthScale,
-    fontSize: 18*widthScale
+    fontSize: 18*widthScale/fontScale
   },
   settingItemTextStyle: {
     color: "white",
-    fontSize: 30*widthScale,
+    fontSize: 30*widthScale/fontScale,
     marginLeft: 10*widthScale,
     marginRight: 10*widthScale
   }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
-import { widthScale, heightScale } from './scale';
+import { widthScale, fontScale } from './scale';
 
 const Button = ({ onPress, children, border }) => {
   const { buttonStyle, textStyle } = styles;
@@ -19,16 +19,16 @@ const styles = {
   textStyle: {
     alignSelf: "center",
     color: "white",
-    fontSize: 28*widthScale,
+    fontSize: 28*widthScale/fontScale,
     fontWeight: "300",
     paddingTop: 10*widthScale,
     paddingBottom: 10*widthScale
   },
   buttonStyle: {
     alignSelf: "center",
-    width: 40*widthScale,
-    height: 40*widthScale,
-    borderRadius: 20*widthScale,
+    width: 44*widthScale/fontScale,
+    height: 44*widthScale/fontScale,
+    borderRadius: 22*widthScale/fontScale,
     borderColor: "white",
     alignItems: "center",
     justifyContent: "center",
