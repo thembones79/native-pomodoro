@@ -1,11 +1,9 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, AppState } from "react-native";
 import ClockFace from "./src/components/ClockFace";
 import Settings from "./src/components/Settings";
 import { Audio } from "expo";
 import { widthScale, fontScale } from "./src/components/scale";
-
-
 
 const INITIAL_STATE = {
   secondsLeft: 1500,
@@ -13,7 +11,10 @@ const INITIAL_STATE = {
   isCountingDown: false,
   isSession: true,
   sessionLength: 25,
-  breakLength: 5
+  breakLength: 5,
+  startTimestamp: 0,
+  comebackTimestamp: 0,
+  appState: AppState.currentState
 };
 
 const soundObject = new Audio.Sound();
@@ -33,9 +34,32 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    AppState.addEventListener("change", this._handleAppStateChange);
     loadSound();
-
   }
+
+  componentWillUnmount() {
+    AppState.removeEventListener("change", this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = nextAppState => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      this.setState({
+        comebackTimestamp: Date.now()
+      });
+    }
+    let timeSpentOffline = Math.floor(
+      (this.state.comebackTimestamp - this.state.startTimestamp) / 1000
+    );
+
+    this.setState({
+      appState: nextAppState,
+      secondsLeft: this.state.secondsLeft - timeSpentOffline
+    });
+  };
 
   beep = () => {
     soundObject.playAsync();
@@ -60,11 +84,12 @@ export default class App extends React.Component {
   countdown = () => {
     if (!this.state.isCountingDown) {
       clearInterval(this.timer);
-      this.setState({ isCountingDown: true });
-      this.timer = setInterval(
-        this.timerDecrement,
-        1000
-      );
+      this.setState({
+        isCountingDown: true,
+        startTimestamp: Date.now(),
+        comebackTimestamp: Date.now()
+      });
+      this.timer = setInterval(this.timerDecrement, 1000);
     } else {
       this.setState({ isCountingDown: false });
       clearInterval(this.timer);
@@ -73,7 +98,9 @@ export default class App extends React.Component {
 
   timerDecrement = () => {
     this.setState(
-      state => ({ secondsLeft: state.secondsLeft - 1 }),
+      state => ({
+        secondsLeft: state.secondsLeft - 1
+      }),
       this.sessionChange
     );
   };
@@ -113,7 +140,9 @@ export default class App extends React.Component {
 
   sessionDecrement = () => {
     if (this.state.sessionLength > 1) {
-      this.setState({ sessionLength: this.state.sessionLength - 1 });
+      this.setState({
+        sessionLength: this.state.sessionLength - 1
+      });
       //the condition below prevents decreasing displayed time when in session mode and pressing "break decrement" button
       if (this.state.isSession) {
         this.decreaseDisplayedTime();
@@ -123,7 +152,9 @@ export default class App extends React.Component {
 
   sessionIncrement = () => {
     if (this.state.sessionLength < 60) {
-      this.setState({ sessionLength: this.state.sessionLength + 1 });
+      this.setState({
+        sessionLength: this.state.sessionLength + 1
+      });
       if (this.state.isSession) {
         this.increaseDisplayedTime();
       }
@@ -132,7 +163,9 @@ export default class App extends React.Component {
 
   breakDecrement = () => {
     if (this.state.breakLength > 1) {
-      this.setState({ breakLength: this.state.breakLength - 1 });
+      this.setState({
+        breakLength: this.state.breakLength - 1
+      });
       if (!this.state.isSession) {
         this.decreaseDisplayedTime();
       }
@@ -141,7 +174,9 @@ export default class App extends React.Component {
 
   breakIncrement = () => {
     if (this.state.breakLength < 60) {
-      this.setState({ breakLength: this.state.breakLength + 1 });
+      this.setState({
+        breakLength: this.state.breakLength + 1
+      });
       if (!this.state.isSession) {
         this.increaseDisplayedTime();
       }
@@ -153,7 +188,9 @@ export default class App extends React.Component {
       <View
         style={[
           styles.container,
-          { backgroundColor: this.state.isSession ? "tomato" : "#00de88" }
+          {
+            backgroundColor: this.state.isSession ? "tomato" : "#00de88"
+          }
         ]}
       >
         <Text style={styles.headerStyle}>Pomodoro Clock</Text>
@@ -187,9 +224,9 @@ const styles = {
   },
   headerStyle: {
     color: "white",
-    fontSize: 36*widthScale/fontScale,
+    fontSize: (36 * widthScale) / fontScale,
     fontWeight: "200",
-    marginTop: 40*widthScale,
-    marginBottom: 20*widthScale
+    marginTop: 40 * widthScale,
+    marginBottom: 20 * widthScale
   }
 };
