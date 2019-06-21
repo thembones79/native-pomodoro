@@ -1,9 +1,11 @@
 import React from "react";
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 import { Text, View, AppState } from "react-native";
 import ClockFace from "./src/components/ClockFace";
 import Settings from "./src/components/Settings";
-import { Audio } from "expo";
+import { Audio } from "expo-av";
 import { widthScale, fontScale } from "./src/components/scale";
+// import KeepAwake from 'react-native-keep-awake';
 
 const INITIAL_STATE = {
   secondsLeft: 1500,
@@ -83,6 +85,7 @@ export default class App extends React.Component {
 
   countdown = () => {
     if (!this.state.isCountingDown) {
+      activateKeepAwake();
       clearInterval(this.timer);
       this.setState({
         isCountingDown: true,
@@ -91,6 +94,7 @@ export default class App extends React.Component {
       });
       this.timer = setInterval(this.timerDecrement, 1000);
     } else {
+      deactivateKeepAwake();
       this.setState({ isCountingDown: false });
       clearInterval(this.timer);
     }
@@ -184,6 +188,7 @@ export default class App extends React.Component {
   };
 
   render() {
+   
     return (
       <View
         style={[
@@ -211,6 +216,7 @@ export default class App extends React.Component {
           sessionDecrement={this.sessionDecrement}
           sessionIncrement={this.sessionIncrement}
         />
+       
       </View>
     );
   }

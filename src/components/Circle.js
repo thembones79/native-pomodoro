@@ -1,10 +1,17 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text} from "react-native";
-import { Constants, Svg } from "expo";
+
+//import { Constants} from "expo";
+
+import { Svg } from 'expo';
+const { Circle, Rect } = Svg;
+
+//import { Circle } from 'react-native-svg'
+//import * as Svg from 'react-native-svg'
 import {widthScale, heightScale} from './scale';
 
 
-export default class Circle extends Component {
+export default class BigCircle extends Component {
   render() {
     const radius = 150*widthScale;
     const circleLength = 2 * Math.PI * radius;
@@ -13,7 +20,7 @@ export default class Circle extends Component {
     return (
       <View style={styles.circleContainer}>
         <Svg height={320*widthScale} width={320*widthScale}>
-          <Svg.Circle
+          <Circle
             cx={160*widthScale}
             cy={160*widthScale}
             r={radius}
